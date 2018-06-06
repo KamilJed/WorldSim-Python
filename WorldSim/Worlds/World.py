@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 
 
-class World:
+class World(ABC):
 
     def __init__(self, world_view):
         self.worldView = world_view
@@ -14,6 +14,7 @@ class World:
         self.xOffset = (width - (self.worldSizeX * self.fieldWidth)) / 2
         self.yOffset = (height - (self.worldSizeY * self.fieldHeight)) / 2
 
+    @abstractmethod
     def draw_world(self):
         for i in range(self.worldSizeY):
             for j in range(self.worldSizeX):
