@@ -11,6 +11,7 @@ class Organism(ABC):
         self._initiative = 0
         self._alive = True
         self._grownUp = False
+        self._special = False
         if strength is not None:
             self._strength = strength
 
@@ -71,8 +72,11 @@ class Organism(ABC):
 
         if isinstance(organism, WorldSim.Organisms.Plants.Plant.Plant):
             self._strength += organism.boost()
-            if organism.isPoisonous() and not self.getSpecial():
+            if organism.isPoisonous() and not self.special:
                 self.kill()
+                organism.kill()
+                return
+            elif organism.isPoisonous() and self.special:
                 organism.kill()
                 return
 
@@ -100,16 +104,17 @@ class Organism(ABC):
     def getName(self):
         return
 
-    def getSpecial(self):
-        return False
+    @property
+    def special(self):
+        return self._special
 
     def getFlatOrganism(self):
         flat = ""
         flat += self.getName()
         flat += ' '
-        flat += self._strength
+        flat += str(self._strength)
         flat += ' '
-        flat += self._posX
+        flat += str(self._posX)
         flat += ' '
-        flat += self._posY
+        flat += str(self._posY)
         return flat

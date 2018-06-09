@@ -10,6 +10,7 @@ from WorldSim.Organisms.Animals.Antelope import Antelope
 from WorldSim.Organisms.Animals.Fox import Fox
 from WorldSim.Organisms.Animals.Tortoise import Tortoise
 from WorldSim.Organisms.Plants.HeracleumSosnowskyi import HeracleumSosnowskyi
+from WorldSim.Organisms.Animals.Human import Human
 
 
 class World(ABC):
@@ -52,6 +53,9 @@ class World(ABC):
                     self.addOrganism(Tortoise(j, i, self))
                 elif character == 9:
                     self.addOrganism(HeracleumSosnowskyi(j, i, self))
+                elif character == 10:
+                    if self._human is None:
+                        self.addOrganism(Human(j, i, self))
 
     @property
     def worldView(self):
@@ -79,7 +83,7 @@ class World(ABC):
         self._orgQueue.append(organism)
         self._orgQueue = sorted(self._orgQueue, key=lambda org: org.initiative, reverse=True)
 
-    def newTurn(self):
+    def newTurn(self, event=None):
         self._worldView.delete("all")
         for org in self._orgQueue:
             if org.alive and org.grownUp:
@@ -89,28 +93,42 @@ class World(ABC):
 
         self._deleteOrganisms()
         self.drawWorld()
+        if self._human is not None:
+            self._human.abilityControl()
 
     def _deleteOrganisms(self):
         self._orgQueue[:] = [org for org in self._orgQueue if org.alive]
 
     def leftCatch(self, event):
-        pass
+        if self._human is not None:
+            self._human.dX = -1
 
     def upCatch(self, event):
-        pass
+        if self._human is not None:
+            self._human.dY = -1
 
     def rightCatch(self, event):
-        pass
+        if self._human is not None:
+            self._human.dX = 1
 
     def downCatch(self, event):
-        pass
+        if self._human is not None:
+            self._human.dY = 1
 
     def eCatch(self, event):
-        pass
+        if self._human is not None:
+            self._human.turnAbility()
 
     def changeSize(self, sizeX, sizeY):
+        self._human = None
         self._worldSizeX = sizeX
         self._worldSizeY = sizeY
         self._orgQueue = []
         self._worldView.delete("all")
         self.initWorld()
+
+    def setHuman(self, human):
+        self._human = human
+
+    def killHuman(self):
+        self._human = None
