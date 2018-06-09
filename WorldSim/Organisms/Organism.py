@@ -29,19 +29,11 @@ class Organism(ABC):
         return self._posY
 
     def draw(self):
-        if self._world.isHexWorld:
-            pass
-        else:
-            width = int(self._world.worldView.cget("width"))
-            height = int(self._world.worldView.cget("height"))
-            field_width = width / self._world.worldSizeX
-            field_height = height / self._world.worldSizeY
-            xoffset = (width - (self._world.worldSizeX * field_width)) / 2
-            yoffset = (height - (self._world.worldSizeY * field_height)) / 2
-            x0 = xoffset + (self._posX * field_width)
-            y0 = yoffset + (self._posY * field_height)
-            x1 = x0 + field_width
-            y1 = y0 + field_height
+            fieldWidth, fieldHeight, xOffset, yOffset = self._world.calculate()
+            x0 = xOffset + (self._posX * fieldWidth)
+            y0 = yOffset + (self._posY * fieldHeight)
+            x1 = x0 + fieldWidth
+            y1 = y0 + fieldHeight
             self._world.worldView.create_rectangle(x0, y0, x1, y1, fill=self._color)
 
     def kill(self):
@@ -72,7 +64,7 @@ class Organism(ABC):
         import WorldSim.Organisms.Plants.Plant
 
         if isinstance(organism, WorldSim.Organisms.Plants.Plant.Plant):
-            self._strength += organism.boost()
+            self._strength += organism.boost
             if organism.isPoisonous() and not self.special:
                 self.kill()
                 organism.kill()

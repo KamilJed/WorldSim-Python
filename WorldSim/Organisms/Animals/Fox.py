@@ -29,7 +29,7 @@ class Fox(Animal):
                     if ++j == 2:
                         j = -1
                     break
-                if self._posX + j >= 0 and self._posX + j < maxX:
+                if 0 <= self._posX + j < maxX:
                     organism = self._world.isEmpty(self._posX + j, self._posY + i)
 
                     if organism is None:

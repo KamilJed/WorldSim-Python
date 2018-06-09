@@ -4,6 +4,8 @@ from Lib import random
 
 class Antelope(Escaper):
 
+    __escapeChance = 50
+
     def __init__(self, x, y, world, strength=None):
         super().__init__(x, y, world, strength)
         self._initiative = 4
@@ -26,7 +28,7 @@ class Antelope(Escaper):
         import WorldSim.Organisms.Plants.Plant
         if isinstance(organism, WorldSim.Organisms.Plants.Plant.Plant):
             return False
-        if random.randrange(0, 100, 1) <= 50:
+        if random.randrange(0, 100, 1) <= Antelope.__escapeChance:
             return super().escape(organism, dX, dY)
         return False
 

@@ -3,6 +3,8 @@ from WorldSim.Organisms.Plants.Plant import Plant
 
 class Dandelion(Plant):
 
+    __pollinationChance = 3
+
     def __init__(self, x, y, world, strength=None):
         super().__init__(x, y, world, strength)
         self._initiative = 0
@@ -17,5 +19,5 @@ class Dandelion(Plant):
         return "Dandelion"
 
     def action(self):
-        for i in range(0, 3):
+        for i in range(0, Dandelion.__pollinationChance):
             super().action()

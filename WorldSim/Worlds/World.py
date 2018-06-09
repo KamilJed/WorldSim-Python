@@ -29,6 +29,9 @@ class World(ABC):
         self.cyberTest = True
         self.initWorld()
 
+    def _deleteOrganisms(self):
+        self._orgQueue[:] = [org for org in self._orgQueue if org.alive]
+
     @abstractmethod
     def drawWorld(self):
         pass
@@ -38,37 +41,38 @@ class World(ABC):
             for j in range(self._worldSizeX):
                 character = random.randrange(0, 40, 1)
 
-                # if character == 0:
-                #     self.addOrganism(Sheep(j, i, self))
-                # elif character == 1:
-                #     self.addOrganism(Wolf(j, i, self))
-                # elif character == 2:
-                #     self.addOrganism(Grass(j, i, self))
-                # elif character == 3:
-                #     self.addOrganism(Guarana(j, i, self))
-                # elif character == 4:
-                #     self.addOrganism(Dandelion(j, i, self))
-                # elif character == 5:
-                #     self.addOrganism(DeadlyNightsahde(j, i, self))
-                # elif character == 6:
-                #     self.addOrganism(Antelope(j, i, self))
-                # elif character == 7:
-                #     self.addOrganism(Fox(j, i, self))
-                # elif character == 8:
-                #     self.addOrganism(Tortoise(j, i, self))
-                # elif character == 9:
-                #     self.addOrganism(HeracleumSosnowskyi(j, i, self))
-                # elif character == 10:
-                #     if self._human is None:
-                #         self.addOrganism(Human(j, i, self))
-                # elif character == 11:
-                #     self.addOrganism(CyberSheep(j, i, self))
-
-                if character == 0 or character == 3:
+                if character == 0:
+                    self.addOrganism(Sheep(j, i, self))
+                elif character == 1:
+                    self.addOrganism(Wolf(j, i, self))
+                elif character == 2:
+                    self.addOrganism(Grass(j, i, self))
+                elif character == 3:
+                    self.addOrganism(Guarana(j, i, self))
+                elif character == 4:
+                    self.addOrganism(Dandelion(j, i, self))
+                elif character == 5:
+                    self.addOrganism(DeadlyNightsahde(j, i, self))
+                elif character == 6:
+                    self.addOrganism(Antelope(j, i, self))
+                elif character == 7:
+                    self.addOrganism(Fox(j, i, self))
+                elif character == 8:
+                    self.addOrganism(Tortoise(j, i, self))
+                elif character == 9:
                     self.addOrganism(HeracleumSosnowskyi(j, i, self))
-                elif character == 11 and self.cyberTest:
+                elif character == 10:
+                    if self._human is None:
+                        self.addOrganism(Human(j, i, self))
+                elif character == 11:
                     self.addOrganism(CyberSheep(j, i, self))
-                    self.cyberTest = False
+
+                # CyberSheep test code
+                # if character == 0 or character == 3:
+                #     self.addOrganism(HeracleumSosnowskyi(j, i, self))
+                # elif character == 11 and self.cyberTest:
+                #     self.addOrganism(CyberSheep(j, i, self))
+                #     self.cyberTest = False
 
     @property
     def worldView(self):
@@ -111,9 +115,6 @@ class World(ABC):
         if self._human is not None:
             self._human.abilityControl()
 
-    def _deleteOrganisms(self):
-        self._orgQueue[:] = [org for org in self._orgQueue if org.alive]
-
     def leftCatch(self, event):
         if self._human is not None:
             self._human.dX = -1
@@ -155,7 +156,7 @@ class World(ABC):
         return heracleum
 
     def setMessage(self, msg):
-        if self._msgCount < 3:
+        if self._msgCount < 5:
             message = self._textLabel['text']
             message += msg + '\n'
             self._textLabel['text'] = message

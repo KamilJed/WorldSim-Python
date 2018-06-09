@@ -8,6 +8,7 @@ class Plant(Organism, ABC):
     def __init__(self, x, y, world, strength=None):
         super().__init__(x, y, world, strength)
         self._poisonous = False
+        self._boost = 0
 
     def action(self):
         if random.randrange(0, 100, 1) < 20:
@@ -23,8 +24,9 @@ class Plant(Organism, ABC):
                         self._world.setMessage(self.getName() + " has grown")
                         return
 
+    @property
     def boost(self):
-        return 0
+        return self._boost
 
     def isPoisonous(self):
         return self._poisonous

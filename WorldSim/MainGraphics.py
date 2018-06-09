@@ -11,7 +11,7 @@ class MainWindow:
         self.__worldView = Canvas(self.__mainWindow, height=650, width=650, border=1, bg="white", relief=GROOVE)
         self.__worldView.grid(row=0, columnspan=10, rowspan=10)
 
-        self.__messagesOutput = Label(self.__mainWindow, text="Press new turn to begin", height=5, width=92, bg="white", fg="green", relief=GROOVE)
+        self.__messagesOutput = Label(self.__mainWindow, text="Press new turn to begin", height=6, width=92, bg="white", fg="green", relief=GROOVE)
         self.__messagesOutput.grid(row=10, column=0)
 
         self.__world = SquareWorld.SquareWorld(self.__worldView, 20, 20, self.__messagesOutput)
