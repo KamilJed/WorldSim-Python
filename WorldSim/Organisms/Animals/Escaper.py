@@ -11,8 +11,8 @@ class Escaper(Animal, ABC):
         maxX = self._world.worldSizeX
         maxY = self._world.worldSizeY
 
-        for i in range(-1, 1, 1):
-            for j in range(-1, 1, 1):
+        for i in range(-1, 2, 1):
+            for j in range(-1, 2, 1):
                 if self._posY + i < 0 or self._posY + i >= maxY:
                     break
                 if 0 <= self._posX + j < maxX and self._world.isEmpty(self._posX + j, self._posY + i) is None:
