@@ -15,4 +15,4 @@ class DeadlyNightsahde(Plant):
         return DeadlyNightsahde(x, y, self._world)
 
     def getName(self):
-        return "DeadlyNightsahde"
+        return "DeadlyNightshade"

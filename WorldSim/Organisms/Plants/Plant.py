@@ -20,6 +20,7 @@ class Plant(Organism, ABC):
                         break
                     if (self._posX + j >= 0) and (self._posX + j < maxX) and self._world.isEmpty(self._posX + j, self._posY + i) is None:
                         self._world.addOrganism(self.clone(self._posX + j, self._posY + i))
+                        self._world.setMessage(self.getName() + " has grown")
                         return
 
     def boost(self):

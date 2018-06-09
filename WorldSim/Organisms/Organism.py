@@ -12,6 +12,7 @@ class Organism(ABC):
         self._alive = True
         self._grownUp = False
         self._special = False
+        self._heracleumProof = False
         if strength is not None:
             self._strength = strength
 
@@ -75,23 +76,29 @@ class Organism(ABC):
             if organism.isPoisonous() and not self.special:
                 self.kill()
                 organism.kill()
+                self._world.setMessage(self.getName() + " has been poisoned")
                 return
-            elif organism.isPoisonous() and self.special:
+            else:
                 organism.kill()
+                self._world.setMessage(self.getName() + " has eaten " + organism.getName())
                 return
 
         elif isinstance(organism, WorldSim.Organisms.Animals.Animal.Animal):
             if organism.escape(self, dX, dY):
+                self._world.setMessage(organism.getName() + " has escaped")
                 return
             if organism.deflectAttack(self):
                 self._posX -= dX
                 self._posY -= dY
+                self._world.setMessage(organism.getName() + " has deflected the attack")
                 return
 
         if self._strength < organism.strength:
             self.kill()
+            self._world.setMessage(organism.getName() + " killed " + self.getName())
         else:
             organism.kill()
+            self._world.setMessage(self.getName() + " killed " + organism.getName())
 
     def growUp(self):
         self._grownUp = True
@@ -112,9 +119,13 @@ class Organism(ABC):
         flat = ""
         flat += self.getName()
         flat += ' '
-        flat += str(self._strength)
-        flat += ' '
         flat += str(self._posX)
         flat += ' '
         flat += str(self._posY)
+        flat += ' '
+        flat += str(self._strength)
         return flat
+
+    @property
+    def heracleumProof(self):
+        return self._heracleumProof

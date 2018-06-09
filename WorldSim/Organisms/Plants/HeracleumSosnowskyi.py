@@ -30,5 +30,5 @@ class HeracleumSosnowskyi(Plant):
                     organism = self._world.isEmpty(self._posX + j, self._posY + i)
 
                     if isinstance(organism, WorldSim.Organisms.Animals.Animal.Animal):
-                        if not organism.special:
+                        if not organism.special and not organism.heracleumProof:
                             organism.kill()
